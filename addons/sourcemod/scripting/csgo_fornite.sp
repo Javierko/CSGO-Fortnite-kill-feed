@@ -27,87 +27,84 @@ public void OnPluginStart()
 public void Event_PlayerDeath(Event event, const char[] name, bool dontBroadcast) 
 {
 	int victim = GetClientOfUserId(event.GetInt("userid"));
-	int attacker = GetClientOfUserId(event.GetInt("attacker"));   
+	int attacker = GetClientOfUserId(event.GetInt("attacker")); 
 	
 	char sWeapon[512];
 	event.GetString("weapon", sWeapon, sizeof(sWeapon));
 	
 	for (int i = 1; i <= MaxClients; i++) 
 	{
-    	if (IsValidClient(i))  
-        {
-	        if (i == attacker) 
-	        {
-	        	if(IsWeaponShotgun(sWeapon))
-	        	{
-	        		PrintToChat(attacker, " \x06%N \x01shotgunned \x02%N", attacker, victim);
-	        	}
-	        	else if(IsWeaponRifle(sWeapon))
-	        	{
-	        		PrintToChat(attacker, " \x06%N \x01eliminated \x02%N \x01with a rifle", attacker, victim);
-	        	}
-	        	else if(IsWeaponPistol(sWeapon))
-	        	{
-	        		PrintToChat(attacker, " \x06%N \x01eliminated \x02%N \x01with a pistol", attacker, victim);
-	        	}
-	        	else if(IsWeaponSMG(sWeapon))
-	        	{
-	        		PrintToChat(attacker, " \x06%N \x01eliminated \x02%N \x01with an SMG", attacker, victim);
-	        	}
-	        	else if(IsWeaponScope(sWeapon))
-	        	{
-	        		float distance;
-	        		
-	        		distance = Entity_GetDistance(attacker, victim);
-	        		distance = Math_UnitsToMeters(distance);
-	        		
-	        		PrintToChat(attacker, " \x06%N \x01sniped \x02%N (%01.0fm)", attacker, victim, distance);
-	        	}
-	        	else if(IsWeaponHeavy(sWeapon))
-	        	{
-	        		PrintToChat(attacker, " \x06%N \x01eliminated \x02%N \x01with a heavy gun", attacker, victim);
-	        	}
-	        	else if(IsWeaponKnife(sWeapon))
-	        	{
-	        		PrintToChat(attacker, " \x06%N \x01eliminated \x02%N \x01with knife", attacker, victim);
-	        	}
-	        } 
-	        else 
-	        {
-	        	if(IsWeaponShotgun(sWeapon))
-	        	{
-	        		PrintToChat(i, " \x0D%N \x01shotgunned \x02%N", attacker, victim);
-	        	}
-	        	else if(IsWeaponRifle(sWeapon))
-	        	{
-	        		PrintToChat(i, " \x0D%N \x01eliminated \x02%N \x01with a rifle", attacker, victim);
-	        	}
-	        	else if(IsWeaponPistol(sWeapon))
-	        	{
-	        		PrintToChat(i, " \x0D%N \x01eliminated \x02%N \x01with a pistol", attacker, victim);
-	        	}
-	        	else if(IsWeaponSMG(sWeapon))
-	        	{
-	        		PrintToChat(i, " \x0D%N \x01eliminated \x02%N \x01with an SMG", attacker, victim);
-	        	}
-	        	else if(IsWeaponScope(sWeapon))
-	        	{
-	        		float distance;
-	        		
-	        		distance = Entity_GetDistance(attacker, victim);
-	        		distance = Math_UnitsToMeters(distance);
-	        		
-	        		PrintToChat(i, " \x0D%N \x01sniped \x02%N (%01.0fm)", attacker, victim, distance);
-	        	}
-	        	else if(IsWeaponHeavy(sWeapon))
-	        	{
-	        		PrintToChat(i, " \x0D%N \x01eliminated \x02%N \x01with a heavy gun", attacker, victim);
-	        	}
-	        	else if(IsWeaponKnife(sWeapon))
-	        	{
-	        		PrintToChat(i, " \x0D%N \x01eliminated \x02%N \x01with knife", attacker, victim);
-	        	}
-	        }
+		if(IsValidClient(i))
+		{
+			if(i == attacker)
+			{
+				if(IsWeaponShotgun(sWeapon))
+				{
+					PrintToChat(attacker, " \x06%N \x01shotgunned \x02%N", attacker, victim);
+				}
+				else if(IsWeaponRifle(sWeapon))
+				{
+					PrintToChat(attacker, " \x06%N \x01eliminated \x02%N \x01with a rifle", attacker, victim);
+				}
+				else if(IsWeaponPistol(sWeapon))
+				{
+					PrintToChat(attacker, " \x06%N \x01eliminated \x02%N \x01with a pistol", attacker, victim);
+				}
+				else if(IsWeaponSMG(sWeapon))
+				{
+					PrintToChat(attacker, " \x06%N \x01eliminated \x02%N \x01with an SMG", attacker, victim);
+				}
+				else if(IsWeaponScope(sWeapon))
+				{
+					float distance;        		
+					distance = Entity_GetDistance(attacker, victim);
+					distance = Math_UnitsToMeters(distance);	        		
+					PrintToChat(attacker, " \x06%N \x01sniped \x02%N (%01.0fm)", attacker, victim, distance);
+				}
+				else if(IsWeaponHeavy(sWeapon))
+				{
+					PrintToChat(attacker, " \x06%N \x01eliminated \x02%N \x01with a heavy gun", attacker, victim);
+				}
+				else if(IsWeaponKnife(sWeapon))
+				{
+					PrintToChat(attacker, " \x06%N \x01eliminated \x02%N \x01with knife", attacker, victim);
+				}
+			}
+			else
+			{
+				if(IsWeaponShotgun(sWeapon))
+				{
+					PrintToChat(i, " \x0D%N \x01shotgunned \x02%N", attacker, victim);
+				}
+				else if(IsWeaponRifle(sWeapon))
+				{
+					PrintToChat(i, " \x0D%N \x01eliminated \x02%N \x01with a rifle", attacker, victim);
+				}
+				else if(IsWeaponPistol(sWeapon))
+				{
+					PrintToChat(i, " \x0D%N \x01eliminated \x02%N \x01with a pistol", attacker, victim);
+				}
+				else if(IsWeaponSMG(sWeapon))
+				{
+					PrintToChat(i, " \x0D%N \x01eliminated \x02%N \x01with an SMG", attacker, victim);
+				}
+				else if(IsWeaponScope(sWeapon))
+				{
+					float distance;
+					distance = Entity_GetDistance(attacker, victim);
+					distance = Math_UnitsToMeters(distance);   
+					
+					PrintToChat(i, " \x0D%N \x01sniped \x02%N (%01.0fm)", attacker, victim, distance);
+				}
+				else if(IsWeaponHeavy(sWeapon))
+				{
+					PrintToChat(i, " \x0D%N \x01eliminated \x02%N \x01with a heavy gun", attacker, victim);
+				}
+				else if(IsWeaponKnife(sWeapon))
+				{
+					PrintToChat(i, " \x0D%N \x01eliminated \x02%N \x01with knife", attacker, victim);
+				}
+			}
 		}
 	}
 }
@@ -210,10 +207,9 @@ stock bool IsWeaponKnife(const char[] sWeapon)
 
 stock bool IsValidClient(int client)
 {
-    if (!(0 < client <= MaxClients) || !IsClientInGame(client) || IsFakeClient(client))
-    {
-        return false;
-    }
-    
-    return true;
+	if(client >= 1 && client <= MaxClients && IsClientConnected(client) && IsClientInGame(client)) 
+	{
+		return true;
+	}
+	return false;
 }
