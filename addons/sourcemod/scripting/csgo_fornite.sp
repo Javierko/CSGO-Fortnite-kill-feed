@@ -3,7 +3,7 @@
 #include <smlib>
 
 //Defines
-#define PLUGIN_VERSION "1.0.1"
+#define PLUGIN_VERSION "1.0.2"
 
 //Other
 #pragma semicolon 1
@@ -124,7 +124,7 @@ public Action Event_PlayerDeath_Pre(Event event, const char[] name, bool dontBro
 {
 	if(g_cvKillFeed.BoolValue)
 	{
-		return Plugin_Handled;
+		event.BroadcastDisabled = true;  
 	}
 	
 	return Plugin_Continue;
