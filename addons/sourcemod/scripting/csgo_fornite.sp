@@ -3,11 +3,14 @@
 #include <smlib>
 
 //Defines
-#define PLUGIN_VERSION "1.0.0"
+#define PLUGIN_VERSION "1.0.1"
 
 //Other
 #pragma semicolon 1
 #pragma newdecls required
+
+//Cvars
+ConVar g_cvKillFeed;
 
 public Plugin myinfo = {
 	name        = "[CS:GO] Fortnite kill feed",
@@ -22,6 +25,11 @@ public void OnPluginStart()
 	//Events
 	HookEvent("player_death", Event_PlayerDeath_Pre, EventHookMode_Pre);
 	HookEvent("player_death", Event_PlayerDeath);
+	
+	//Cvars
+	g_cvKillFeed = CreateConVar("sm_kf_disable", "0", "1 - Kill feed will be disabled, 0 - enabled", _, true, 0.0, true, 1.0);
+	
+	AutoExecConfig(true, "fortnitekillfeed");
 }
 
 public void Event_PlayerDeath(Event event, const char[] name, bool dontBroadcast) 
@@ -56,9 +64,11 @@ public void Event_PlayerDeath(Event event, const char[] name, bool dontBroadcast
 				}
 				else if(IsWeaponScope(sWeapon))
 				{
-					float distance;        		
+					float distance;   
+					
 					distance = Entity_GetDistance(attacker, victim);
-					distance = Math_UnitsToMeters(distance);	        		
+					distance = Math_UnitsToMeters(distance);	
+					
 					PrintToChat(attacker, " \x06%N \x01sniped \x02%N (%01.0fm)", attacker, victim, distance);
 				}
 				else if(IsWeaponHeavy(sWeapon))
@@ -91,6 +101,7 @@ public void Event_PlayerDeath(Event event, const char[] name, bool dontBroadcast
 				else if(IsWeaponScope(sWeapon))
 				{
 					float distance;
+					
 					distance = Entity_GetDistance(attacker, victim);
 					distance = Math_UnitsToMeters(distance);   
 					
@@ -111,7 +122,12 @@ public void Event_PlayerDeath(Event event, const char[] name, bool dontBroadcast
 
 public Action Event_PlayerDeath_Pre(Event event, const char[] name, bool dontBroadcast)
 {
-	return Plugin_Handled;
+	if(g_cvKillFeed.BoolValue)
+	{
+		return Plugin_Handled;
+	}
+	
+	return Plugin_Continue;
 }
 
 stock bool IsWeaponShotgun(const char[] sWeapon)
